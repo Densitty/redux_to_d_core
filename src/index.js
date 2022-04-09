@@ -1,19 +1,19 @@
-// a higher-order fn that receives a fxn as an argument
-function greet(fn) {
-  console.log(fn());
-}
+// an ideal functional programming is to write some small & reusable fxns and compose them to build more complex fxns for solving real world problems
 
-// another higher-order fxn that returns a fxn - actually a HOF can do both (i.e take a fxn as an arg and also return a fxn)
-function sayHello() {
-  return function () {
-    return "Hello World";
-  };
-}
+let input = "  I love writing JS   ";
+let output = `<div>${input.trim()}</div>`;
+// output creates a div element & hosts our trimmed input in it
+console.log(output);
 
-let numbers = [1, 2, 3, 4];
-// map is an e.g of an HoF
-numbers.map((n) => n * 2);
-// another e.g is the setimeout
-setTimeout(() => {
-  console.log("Call me Mr Student");
-}, 2000);
+// output can be achieved in a functional programming way
+// first trim
+const trimStr = (str) => str.trim();
+// we can convert the str in input to lowercases
+const convertToLower = (str) => str.toLowerCase();
+// wrap a string in div - which does not know whether str is trimmed or not
+const wrapDiv = (str) => `<div>${str}</div>`;
+
+// to create a divElement that wraps a trimmed string, we can compose the 2 fxns
+const res = wrapDiv(convertToLower(trimStr(input)));
+
+// res has 2 problems; we have to read the expression 4rm right to left to understand what is going to be returned and then also many parentheses; imagine having many functions
