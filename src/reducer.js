@@ -21,13 +21,15 @@ function reducer(state = [], action) {
       return state.filter((bug) => bug.id !== action.payload.id);
 
     case actions.BUG_RESOLVED:
-      return state.map((bug) => {
+      const updatedState = state.map((bug) => {
         // console.log(bug); //{id: 1, description: "", resolved: false}
         if (bug.id !== action.payload.id) {
           return bug;
         }
         return { ...bug, resolved: true };
       });
+
+      return updatedState;
 
     default:
       return state;
