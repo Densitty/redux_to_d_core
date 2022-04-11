@@ -1,11 +1,42 @@
-import * as actions from "./actionTypes";
+// Action types
+const BUG_ADDED = "BUG_ADDED";
+const BUG_REMOVED = "BUG_REMOVED";
+const BUG_RESOLVED = "BUG_RESOLVED";
 
-// initialize an id
+// Action creators
+export function bugAdded(description) {
+  return {
+    type: BUG_ADDED,
+    payload: {
+      description: description,
+    },
+  };
+}
+
+export function bugRemoved() {
+  return {
+    type: BUG_REMOVED,
+    payload: {
+      id: 1,
+    },
+  };
+}
+
+export function bugResolved(id) {
+  return {
+    type: BUG_RESOLVED,
+    payload: {
+      id,
+    },
+  };
+}
+
+// Reducers
 let lastId = 0;
 
 function reducer(state = [], action) {
   switch (action.type) {
-    case actions.BUG_ADDED:
+    case BUG_ADDED:
       return [
         ...state, // 1st copy all d bugs in state []/[{...},{...}]
         {
@@ -16,11 +47,11 @@ function reducer(state = [], action) {
         },
       ];
 
-    case actions.BUG_REMOVED:
+    case BUG_REMOVED:
       // just remove d bug with d id present in payload
       return state.filter((bug) => bug.id !== action.payload.id);
 
-    case actions.BUG_RESOLVED:
+    case BUG_RESOLVED:
       const updatedState = state.map((bug) => {
         // console.log(bug); //{id: 1, description: "", resolved: false}
         if (bug.id !== action.payload.id) {

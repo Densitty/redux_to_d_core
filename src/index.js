@@ -1,5 +1,8 @@
-import store from "./store";
-import { bugAdded, bugRemoved, bugResolved } from "./actionCreators";
+import configureStore from "./store/configureStore";
+import { bugAdded, bugRemoved, bugResolved } from "./store/bugs";
+
+// call the configureStore() and save it in a store variable
+const store = configureStore();
 
 // store.subscribe() is what gives update on the ui concerning what is happening; we need to store it so that if we navigate to another page, like if the remove bug is on another page, the "add bug" will be removed/not logged
 const unsubscribe = store.subscribe(() => {
