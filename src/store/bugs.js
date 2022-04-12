@@ -1,4 +1,4 @@
-import { createAction } from "@reduxjs/toolkit";
+import { createAction, createReducer } from "@reduxjs/toolkit";
 
 const action = createAction("bugUpdated");
 console.log(action());
@@ -11,70 +11,30 @@ const BUG_RESOLVED = "BUG_RESOLVED";
 export const bugAdded = createAction(BUG_ADDED);
 export const bugRemoved = createAction(BUG_REMOVED);
 export const bugResolved = createAction(BUG_RESOLVED);
-console.log(bugAdded);
-
-// Reducers
-// export function bugAdded(description) {
-//   return {
-//     type: BUG_ADDED,
-//     payload: {
-//       description: description,
-//     },
-//   };
-// }
-
-// export function bugRemoved() {
-//   return {
-//     type: BUG_REMOVED,
-//     payload: {
-//       id: 1,
-//     },
-//   };
-// }
-
-// export function bugResolved(id) {
-//   return {
-//     type: BUG_RESOLVED,
-//     payload: {
-//       id,
-//     },
-//   };
-// }
+console.log(bugAdded());
 
 // Reducers
 let lastId = 0;
+const initialState = [];
 
-function reducer(state = [], action) {
-  switch (action.type) {
-    case bugAdded.type:
-      return [
-        ...state, // 1st copy all d bugs in state []/[{...},{...}]
-        {
-          // add a new one
-          id: ++lastId,
-          description: action.payload.description,
-          resolved: false,
-        },
-      ];
-
-    case bugRemoved.type:
-      // just remove d bug with d id present in payload
-      return state.filter((bug) => bug.id !== action.payload.id);
-
-    case bugResolved.type:
-      const updatedState = state.map((bug) => {
-        // console.log(bug); //{id: 1, description: "", resolved: false}
-        if (bug.id !== action.payload.id) {
-          return bug;
-        }
-        return { ...bug, resolved: true };
-      });
-
-      return updatedState;
-
-    default:
-      return state;
-  }
-}
-
-export default reducer;
+export default createReducer(initialState, {
+  // key: value
+  // actions: function(evt => evt handler)
+  BUG_ADDED: (state, action) => {
+    state.push({
+      id: ++lastId,
+      description: action.payload.description,
+      resolved: false,
+    });
+  },
+  BUG_RESOLVED: (bugs, action) => {
+    const index = bugs.findIndex((bug) => bug.id === action.payload.id);
+    bugs[index].resolved = true;
+  },
+  [bugRemoved.type]: (state, action) => {
+    const newState = state.filter((bug) => bug.id !== action.payload.id);
+    // return { ...newState };
+    state = { ...newState };
+    return state;
+  },
+});
