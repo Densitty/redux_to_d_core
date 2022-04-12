@@ -1,42 +1,52 @@
+import { createAction } from "@reduxjs/toolkit";
+
+const action = createAction("bugUpdated");
+console.log(action());
 // Action types
 const BUG_ADDED = "BUG_ADDED";
 const BUG_REMOVED = "BUG_REMOVED";
 const BUG_RESOLVED = "BUG_RESOLVED";
 
 // Action creators
-export function bugAdded(description) {
-  return {
-    type: BUG_ADDED,
-    payload: {
-      description: description,
-    },
-  };
-}
+export const bugAdded = createAction(BUG_ADDED);
+export const bugRemoved = createAction(BUG_REMOVED);
+export const bugResolved = createAction(BUG_RESOLVED);
+console.log(bugAdded);
 
-export function bugRemoved() {
-  return {
-    type: BUG_REMOVED,
-    payload: {
-      id: 1,
-    },
-  };
-}
+// Reducers
+// export function bugAdded(description) {
+//   return {
+//     type: BUG_ADDED,
+//     payload: {
+//       description: description,
+//     },
+//   };
+// }
 
-export function bugResolved(id) {
-  return {
-    type: BUG_RESOLVED,
-    payload: {
-      id,
-    },
-  };
-}
+// export function bugRemoved() {
+//   return {
+//     type: BUG_REMOVED,
+//     payload: {
+//       id: 1,
+//     },
+//   };
+// }
+
+// export function bugResolved(id) {
+//   return {
+//     type: BUG_RESOLVED,
+//     payload: {
+//       id,
+//     },
+//   };
+// }
 
 // Reducers
 let lastId = 0;
 
 function reducer(state = [], action) {
   switch (action.type) {
-    case BUG_ADDED:
+    case bugAdded.type:
       return [
         ...state, // 1st copy all d bugs in state []/[{...},{...}]
         {
@@ -47,11 +57,11 @@ function reducer(state = [], action) {
         },
       ];
 
-    case BUG_REMOVED:
+    case bugRemoved.type:
       // just remove d bug with d id present in payload
       return state.filter((bug) => bug.id !== action.payload.id);
 
-    case BUG_RESOLVED:
+    case bugResolved.type:
       const updatedState = state.map((bug) => {
         // console.log(bug); //{id: 1, description: "", resolved: false}
         if (bug.id !== action.payload.id) {
