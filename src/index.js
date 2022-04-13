@@ -1,5 +1,6 @@
 import configureAppStore from "./store/configureStore";
 import { bugAdded, bugRemoved, bugResolved } from "./store/bugs";
+import { addProject } from "./store/projects";
 
 // call the configureStore() and save it in a store variable
 const store = configureAppStore();
@@ -13,3 +14,6 @@ store.dispatch(bugResolved({ id: 1 }));
 console.log(store.getState());
 
 store.dispatch(bugRemoved({ id: 1 }));
+
+// console.log(projectsStore.getState());
+store.dispatch(addProject({ name: "Create a Blog on Romance Novels" }));
