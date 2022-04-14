@@ -24,5 +24,6 @@ store.dispatch(bugRemoved({ id: 1 }));
 store.dispatch(addProject({ name: "Create a Blog on Romance Novels" }));
 
 // to compute derived data from redux store; e.g get the number of unresolved bugs
-const unresolvedBugs = getUnresolvedBugs(store.getState());
-console.log(unresolvedBugs);
+const unresolvedBugs1 = getUnresolvedBugs(store.getState());
+const unresolvedBugs2 = getUnresolvedBugs(store.getState());
+console.log(unresolvedBugs1 === unresolvedBugs2); // false
