@@ -21,14 +21,18 @@ const slice = createSlice({
       bugs[index].resolved = true;
     },
     bugRemoved: (state, action) => {
-      const newState = state.filter((bug) => bug.id !== action.payload.id);
-      // return { ...newState };
-      state = { ...newState };
-      return state;
+      return state.filter((bug) => bug.id !== action.payload.id);
     },
   },
 });
 
-console.log(slice);
+// console.log(slice);
 export const { bugAdded, bugResolved, bugRemoved } = slice.actions;
+
+// getUnresolvedBugs is a selector function
+// Selector fxn => takes a state & returns computed state
+export const getUnresolvedBugs = (state) => {
+  return state.entities.bugs.filter((bug) => !bug.resolved);
+};
+
 export default slice.reducer;
