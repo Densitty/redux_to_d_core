@@ -4,6 +4,7 @@ import {
   bugRemoved,
   bugResolved,
   getUnresolvedBugs,
+  getCachedUnresolvedBugs,
 } from "./store/bugs";
 import { addProject } from "./store/projects";
 
@@ -26,4 +27,11 @@ store.dispatch(addProject({ name: "Create a Blog on Romance Novels" }));
 // to compute derived data from redux store; e.g get the number of unresolved bugs
 const unresolvedBugs1 = getUnresolvedBugs(store.getState());
 const unresolvedBugs2 = getUnresolvedBugs(store.getState());
+console.log("Uncached computed data from state");
 console.log(unresolvedBugs1 === unresolvedBugs2); // false
+
+// memoized/cached computed state
+console.log("Cached computed data from state");
+const cachedUnresolvedBugs1 = getCachedUnresolvedBugs(store.getState());
+const cachedUnresolvedBugs2 = getCachedUnresolvedBugs(store.getState());
+console.log(cachedUnresolvedBugs1 === cachedUnresolvedBugs2);

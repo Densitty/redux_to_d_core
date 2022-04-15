@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 
 let lastId = 0;
 const initialState = [];
@@ -34,5 +35,11 @@ export const { bugAdded, bugResolved, bugRemoved } = slice.actions;
 export const getUnresolvedBugs = (state) => {
   return state.entities.bugs.filter((bug) => !bug.resolved);
 };
+
+export const getCachedUnresolvedBugs = createSelector(
+  (state) => state.entities.bugs,
+  (bugs) => bugs.filter((bug) => !bug.resolved)
+  // if bugs does not change, the fxn bug.filter() won't run; only when the state changes will the coputed state change
+);
 
 export default slice.reducer;
