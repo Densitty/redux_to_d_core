@@ -5,8 +5,11 @@ import {
   bugResolved,
   getUnresolvedBugs,
   getCachedUnresolvedBugs,
+  assignBugToUser,
+  getBugsByUser,
 } from "./store/bugs";
 import { addProject } from "./store/projects";
+import { addUser, getCachedProjects, getUsers } from "./store/users";
 
 // call the configureStore() and save it in a store variable
 const store = configureAppStore();
@@ -35,3 +38,17 @@ console.log("Cached computed data from state");
 const cachedUnresolvedBugs1 = getCachedUnresolvedBugs(store.getState());
 const cachedUnresolvedBugs2 = getCachedUnresolvedBugs(store.getState());
 console.log(cachedUnresolvedBugs1 === cachedUnresolvedBugs2);
+
+// add users
+store.dispatch(addUser({ name: "Kelly Rowsone" }));
+store.dispatch(addUser({ name: "Dave Marlyn" }));
+// assign a bug to a user using the userId
+store.dispatch(assignBugToUser({ bugId: 2, userId: 1 }));
+
+// get bugs by a user from the store
+const bugsByUserOne = getBugsByUser(1)(store.getState());
+const bugsByUserTwo = getBugsByUser(2)(store.getState());
+console.log({
+  bugsByUserOne,
+  bugsByUserTwo,
+});
