@@ -38,8 +38,8 @@ export const getUnresolvedBugs = (state) => {
 
 export const getCachedUnresolvedBugs = createSelector(
   (state) => state.entities.bugs,
-  (bugs) => bugs.filter((bug) => !bug.resolved)
-  // if bugs does not change, the fxn bug.filter() won't run; only when the state changes will the coputed state change
+  (state) => state.entities.projects,
+  (bugs, projects) => bugs.filter((bug) => !bug.resolved)
 );
 
 export default slice.reducer;
