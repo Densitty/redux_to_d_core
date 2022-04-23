@@ -1,7 +1,11 @@
 import { createAction } from "@reduxjs/toolkit";
 
+/* An example of an action creator */
 const action = createAction("bugUpdated");
-console.log(action());
+/* will return below */
+console.log(action()); /* {type: "bugUpdated", payload: undefined} */
+// console.log(action({ id: 2 })); /* {type: "bugUpdated", payload: {id: 2}} */
+
 // Action types
 const BUG_ADDED = "BUG_ADDED";
 const BUG_REMOVED = "BUG_REMOVED";
