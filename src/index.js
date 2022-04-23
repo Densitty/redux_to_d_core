@@ -18,4 +18,5 @@ console.log(store.getState());
 // liken the unsubscribe as "remove event handler"
 unsubscribe();
 // supposing the remove button is clicked on, then the corresponding action also need to be dispatched
-store.dispatch(bugRemoved());
+store.dispatch(bugRemoved(1));
+console.log(store.getState());
